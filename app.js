@@ -19,3 +19,18 @@ mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("Connected to MongoDB successfully"))
 	.catch(err => console.log(err));
+
+//Mongoose Routes
+const teachers = require("./routes/api/teachers");
+app.use("/api/teachers", teachers);
+
+const students = require("./routes/api/students");
+app.use("/api/students", students);
+
+const classes = require("./routes/api/classes");
+app.use("/api/classes", classes);
+
+//body parser for JSON
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
