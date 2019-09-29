@@ -65,6 +65,7 @@ router.post("/", (req, res) => {
 router.patch("/", (req, res) => {
 	Course.findById(req.body.course._id).exec((err, course) => {
 		if (err) return res.status(500).send(err); //TODO In model validation before save to prevent saving incorrect student
+		let payload;
 		switch (req.body.options) {
 		case "addStudent":
 			Student.findByIdAndUpdate(
@@ -80,7 +81,7 @@ router.patch("/", (req, res) => {
 					)
 						.populate({ path: "studentIds", select: "name" })
 						.exec((err, course) => {
-							let payload = {
+							payload = {
 								courses: {
 									[course._id]: coursePayload(course)
 								},
@@ -105,7 +106,7 @@ router.patch("/", (req, res) => {
 					)
 						.populate({ path: "studentIds", select: "name" })
 						.exec((err, course) => {
-							let payload = {
+							payload = {
 								courses: {
 									[course._id]: coursePayload(course)
 								},
@@ -116,10 +117,50 @@ router.patch("/", (req, res) => {
 				}
 			);
 			break;
-
+		case "updateDetails":
+			Object.assign(course, req.body.course);
+			payload = {
+				courses: {
+					[course._id]: coursePayload(course)
+				},
+				students: indexPayload(course.studentIds)
+			};
+			res.json(payload);
+			break;
 		default:
 			break;
 		}
+	});
+});
+
+router.delete("/", (req, res) => {
+	Teacher.findById(req.body.teacher._id).exec((err, teacher) => {
+		if (err) return res.status(500).send(err);
+		Course.findOneAndRemove({ _id: req.body.course._id }, (err, course) => {
+			if (err) return res.status(500).send(err);
+			Teacher.findOneAndUpdate(
+				{ _id: req.body.teacher._id },
+				{ $pull: { courseIds: req.body.course._id } },
+				{ new: true }
+			)
+				.populate({
+					path: "courseIds",
+					select: ["subject", "year", "term", "period", "grade", "teacherId"]
+				})
+				.exec((err, teacher) => {
+					let payload = {
+						teachers: {
+							[teacher._id]: {
+								_id: teacher._id,
+								name: teacher.name,
+								email: teacher.email
+							}
+						},
+						courses: indexPayload(teacher.courseIds)
+					};
+					res.json(payload);
+				});
+		});
 	});
 });
 
