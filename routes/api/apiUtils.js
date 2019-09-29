@@ -13,7 +13,7 @@ const coursePayload = course => {
 		period: course.period,
 		grade: course.grade,
 		teacherId: course.teacherId._id,
-		studentIds: indexPayload(course.studentIds)
+		studentIds: Object.keys(indexPayload(course.studentIds))
 	};
 };
 

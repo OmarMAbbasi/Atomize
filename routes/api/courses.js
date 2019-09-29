@@ -63,68 +63,48 @@ router.post("/", (req, res) => {
 });
 
 router.patch("/", (req, res) => {
-	Course.findById(req.body.course._id).exec((err, course) => {
-		if (err) return res.status(500).send(err); //TODO In model validation before save to prevent saving incorrect student
-		switch (req.body.options) {
-		case "addStudent":
-			Student.findByIdAndUpdate(
-				{ _id: req.body.student._id },
-				{ $push: { courseIds: req.body.course._id } }
-			).exec((err, student) => {
-				if (err) return res.status(500).send(err);
-				course.studentIds.push(student._id);
-				course.save().then(() => {
-					let payload = {
-						courses: {
-							[course._id]: coursePayload(course)
-						},
-						students: indexPayload(course.studentIds)
-					};
-					res.json(payload);
+	Course.findById(req.body.course._id)
+		.populate({ path: "studentIds", select: "name" })
+		.exec((err, course) => {
+			if (err) return res.status(500).send(err); //TODO In model validation before save to prevent saving incorrect student
+			switch (req.body.options) {
+			case "addStudent":
+				Student.findByIdAndUpdate(
+					{ _id: req.body.student._id },
+					{ $push: { courseIds: req.body.course._id } }
+				).exec((err, student) => {
+					if (err) return res.status(500).send(err);
+					Course.updateOne(
+						{ _id: req.body.course._id },
+						{ $push: { studentIds: student._id } }
+					).exec(() => {
+						let payload = {
+							courses: {
+								[course._id]: coursePayload(course)
+							},
+							students: indexPayload(course.studentIds)
+						};
+						res.json(payload);
+					});
+					// course.studentIds.push(student._id);
+					// course.save().then(() => {
+					// 	let payload = {
+					// 		courses: {
+					// 			[course._id]: coursePayload(course)
+					// 		},
+					// 		students: indexPayload(course.studentIds)
+					// 	};
+					// 	res.json(payload);
+					// });
 				});
-			});
-			break;
+				break;
 
-		default:
-			break;
-		}
-	});
-	// .exec((err, course) => {
-	// 	if (err) return res.status(500).send(err);
-	// 	switch (req.body.options) {
-	// 	case "addStudent":
-	// 		Student.findByIdAndUpdate(req.body.student._id).exec((err, student) => {
-	// 			if (err) return res.status(500).send(err);
-	// 			console.log(student);
-	// 			res.json(student);
-	// 		});
-	// 		break;
-
-	// 	default:
-	// 		break;
-	// 	}
-	// });
+			default:
+				break;
+			}
+		});
+	
 });
 
-// Course.updateOne(
-// 	{ _id: req.body.course._id },
-// 	{ $push: { studentIds: req.body.student._id } }
-// ).then(() => {
-// 	student
-// 		.updateOne(
-// 			{ _id: req.body.student._id },
-// 			{ $push: { courseIds: req.body.course._id } }
-// 		)
-// 		.then(() => {
-// 			res.json(student);
-// 		});
-// });
-
-// .then(() => {
-// student.update({ _id: req.body.student._id }, {$push: {courseIds: {req.body.course._id}}});
-// })
-// .exec((err, course) => {
-// course.update();
-// });
 
 module.exports = router;
