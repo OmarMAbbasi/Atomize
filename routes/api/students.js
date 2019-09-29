@@ -10,43 +10,42 @@ router.get("/test", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-	Student.findById(req.body.students._id)
+	Student.findById(req.body.student._id)
 		.populate({
 			path: "courseIds",
 			select: ["subject", "year", "term", "period", "grade", "teacherId"]
 		})
 		.exec((err, student) => {
-			console.log(student);
+			console.log(student.courseIds);
 			let payload = {
-				students: {
+				student: {
 					[student._id]: {
 						_id: student._id,
 						name: student.name,
 						age: student.age,
 						grade: student.grade,
 						notes: student.notes
-						// email: student.email
 					}
-				}
-				// courses: indexPayload(student.courseIds)
+				},
+				courses: indexPayload(student.courseIds)
 			};
-			console.log(payload)
+			console.log(payload);
 			res.json(payload);
 		});
 });
 
 router.post("/", (req, res) => {
 	const newStudent = new Student({
-		name: req.body.students.name,
-		age: req.body.students.age,
-		grade: req.body.students.grade,
-		notes: req.body.students.notes ? req.body.students.notes : null
+		name: req.body.student.name,
+		age: req.body.student.age,
+		grade: req.body.student.grade,
+		notes: req.body.student.notes ? req.body.student.notes : null
 	});
 	newStudent
 		.save()
 		.then(student => {
 			let payload = {
-				students: {
+				student: {
 					[student._id]: {
 						_id: student._id,
 						name: student.name,

@@ -7,13 +7,13 @@ const { indexPayload } = require("./apiUtils");
 // const Teacher = require("../../models/Teacher");
 
 router.get("/test", (req, res) => {
-	Teacher.find().exec((err, teachers) => {
-		res.json(teachers);
+	Teacher.find().exec((err, teacher) => {
+		res.json(teacher);
 	});
 });
 
 router.get("/", (req, res) => {
-	Teacher.findById(req.body.teachers._id)
+	Teacher.findById(req.body.teacher._id)
 		.populate({
 			path: "courseIds",
 			select: ["subject", "year", "term", "period", "grade", "teacherId"]
@@ -36,8 +36,8 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
 	const newTeacher = new Teacher({
-		name: req.body.teachers.name,
-		email: req.body.teachers.email
+		name: req.body.teacher.name,
+		email: req.body.teacher.email
 	});
 	newTeacher
 		.save()

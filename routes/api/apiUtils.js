@@ -4,6 +4,20 @@ const indexPayload = array =>
 		return obj;
 	}, {});
 
+const coursePayload = course => {
+	return {
+		_id: course._id,
+		subject: course.subject,
+		year: course.year,
+		term: course.term,
+		period: course.period,
+		grade: course.grade,
+		teacherId: course.teacherId._id,
+		studentIds: indexPayload(course.studentIds)
+	};
+};
+
 module.exports = {
-	indexPayload
+	indexPayload,
+	coursePayload
 };
