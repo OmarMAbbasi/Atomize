@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
 const TeacherSchema = new Schema({
-	_id: Schema.Types.ObjectId,
 	name: {
 		type: String,
 		required: true,
@@ -13,7 +13,7 @@ const TeacherSchema = new Schema({
 		required: true,
 		index: true
 	},
-	courses: [
+	courseIds: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Course"
@@ -25,4 +25,5 @@ const TeacherSchema = new Schema({
 // TeacherSchema.plugin(require("mongoose-autopopulate"));
 
 // eslint-disable-next-line no-undef
-module.exports = Teacher = mongoose.model("teachers", TeacherSchema);
+module.exports = TeacherSchema;
+// module.exports = Teacher = mongoose.model("teachers", TeacherSchema);

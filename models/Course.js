@@ -25,19 +25,19 @@ const CourseSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	teacher: {
+	teacherId: {
 		type: Schema.Types.ObjectId,
 		ref: "Teacher"
 	},
-	assignments: {
+	assignmentIds: {
 		type: Schema.Types.ObjectId,
 		ref: "Assignment"
 	},
-	tests: {
+	testIds: {
 		type: Schema.Types.ObjectId,
 		ref: "Test"
 	},
-	students: [
+	studentIds: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Student"
@@ -46,4 +46,6 @@ const CourseSchema = new Schema({
 });
 
 // eslint-disable-next-line no-undef
-module.exports = Course = mongoose.model("course", CourseSchema);
+module.exports = CourseSchema;
+
+// module.exports = Course = mongoose.model("course", CourseSchema);

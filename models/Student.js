@@ -1,31 +1,36 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const StudentSchema = new Schema({
-	_id: Schema.Types.ObjectId,
 	name: {
 		type: String,
 		required: true,
 		index: true
 	},
+	age: {
+		type: Number,
+		required: true
+	},
 	grade: {
 		type: Number,
 		required: true
 	},
-	courses: [
+	notes: {
+		type: String
+	},
+	courseIds: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Course"
 		}
 	],
-	assignments: [
+	assignmentIds: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Assignment"
 		}
 	],
-	tests: [
+	testIds: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Test"
@@ -33,5 +38,7 @@ const StudentSchema = new Schema({
 	]
 });
 
+module.exports = StudentSchema;
+
 // eslint-disable-next-line no-undef
-module.exports = Student = mongoose.model("students", StudentSchema);
+// module.exports = Student = mongoose.model("students", StudentSchema);

@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const TestSchema = new Schema({
-	_id: Schema.Types.ObjectId,
 	designation: {
 		//Quiz, Test, Midterm, Final
 		type: String,
@@ -36,8 +34,20 @@ const TestSchema = new Schema({
 			pointValue: { type: Number },
 			ref: "Question"
 		}
+	],
+	courseId: {
+		type: Schema.Types.ObjectId,
+		ref: "Teacher"
+	},
+	studentIds: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Student"
+		}
 	]
 });
 
+module.exports = TestSchema;
+
 // eslint-disable-next-line no-undef
-module.exports = Test = mongoose.model("students", TestSchema);
+// module.exports = Test = mongoose.model("students", TestSchema);

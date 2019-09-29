@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 
 const AssignmentSchema = new Schema({
-	_id: Schema.Types.ObjectId,
 	name: {
 		type: String,
 		required: true,
@@ -29,8 +28,27 @@ const AssignmentSchema = new Schema({
 	},
 	pointsEarned: {
 		type: Number
-	}
+	},
+	questionIds: [
+		{
+			type: Schema.Types.ObjectId,
+			pointValue: { type: Number },
+			ref: "Question"
+		}
+	],
+	courseId: {
+		type: Schema.Types.ObjectId,
+		ref: "Teacher"
+	},
+	studentIds: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Student"
+		}
+	]
 });
-z
+
+module.exports = AssignmentSchema;
+
 // eslint-disable-next-line no-undef
-module.exports = Assignment = mongoose.model("students", AssignmentSchema);
+// module.exports = Assignment = mongoose.model("assignments", AssignmentSchema);

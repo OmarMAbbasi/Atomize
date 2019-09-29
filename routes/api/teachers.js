@@ -1,34 +1,57 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Teacher = require("../../models/Teacher");
+const { Course, Teacher } = require("../../models");
+const { indexPayload } = require("./apiUtils");
+
+// const Teacher = require("../../models/Teacher");
 
 router.get("/test", (req, res) => {
 	Teacher.find().exec((err, teachers) => {
-		console.log(teachers);
 		res.json(teachers);
 	});
 });
 
 router.get("/", (req, res) => {
-	Teacher.find()
-		.exec((err, teachers) => {
-			console.log(teachers);
-			res.json(teachers);
+	Teacher.findById(req.body.teachers._id)
+		.populate({
+			path: "courseIds",
+			select: ["subject", "year", "term", "period", "grade", "teacherId"]
+		})
+		.exec((err, teacher) => {
+			console.log(teacher);
+			let payload = {
+				teachers: {
+					[teacher._id]: {
+						_id: teacher._id,
+						name: teacher.name,
+						email: teacher.email
+					}
+				},
+				courses: indexPayload(teacher.courseIds)
+			};
+			res.json(payload);
 		});
 });
 
 router.post("/", (req, res) => {
-	// console.log(Teacher.find());
 	const newTeacher = new Teacher({
-		_id: new mongoose.Types.ObjectId(),
-		name: req.body.name,
-		email: req.body.email
+		name: req.body.teachers.name,
+		email: req.body.teachers.email
 	});
 	newTeacher
 		.save()
 		.then(teacher => {
-			res.json(teacher);
+			delete teacher.courses;
+			let payload = {
+				teachers: {
+					[teacher.id]: {
+						name: teacher.name,
+						email: teacher.email
+					}
+				}
+			};
+			res.json(payload);
 		})
 		.catch(err => console.log(err));
 });

@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const QuestionSchema = new Schema({
-	_id: Schema.Types.ObjectId,
 	name: {
 		type: String,
 		required: true,
@@ -23,8 +21,12 @@ const QuestionSchema = new Schema({
 	questionAnswer: {
 		type: String,
 		required: true
+	},
+	pointValue: {
+		type: Number
 	}
 });
+module.exports = QuestionSchema;
 
 // eslint-disable-next-line no-undef
-module.exports = Question = mongoose.model("students", QuestionSchema);
+// module.exports = Question = mongoose.model("students", QuestionSchema);
