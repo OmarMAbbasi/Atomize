@@ -4,14 +4,17 @@ const Schema = mongoose.Schema;
 // const StudentSchema = require("./Student")
 // const TeacherSchema = require("./Teacher")
 
-const ClassSchema = new Schema({
-	_id: Schema.Types.ObjectId,
+const CourseSchema = new Schema({
+	subject: {
+		type: String,
+		required: true
+	},
 	year: {
 		type: String,
 		required: true
 	},
-	quarter: {
-		type: Number,
+	term: {
+		type: String,
 		required: true
 	},
 	period: {
@@ -26,21 +29,21 @@ const ClassSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Teacher"
 	},
+	assignments: {
+		type: Schema.Types.ObjectId,
+		ref: "Assignment"
+	},
+	tests: {
+		type: Schema.Types.ObjectId,
+		ref: "Test"
+	},
 	students: [
 		{
 			type: Schema.Types.ObjectId,
-			assignments: {
-				type: Schema.Types.ObjectId,
-				ref: "Assignment"
-			},
-			tests: {
-				type: Schema.Types.ObjectId,
-				ref: "Test"
-			},
 			ref: "Student"
 		}
 	]
 });
 
 // eslint-disable-next-line no-undef
-module.exports = Class = mongoose.model("class", ClassSchema);
+module.exports = Course = mongoose.model("course", CourseSchema);

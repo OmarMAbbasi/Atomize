@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// const ClassSchema = require("./Class");
 
 const AssignmentSchema = new Schema({
 	_id: Schema.Types.ObjectId,
@@ -32,6 +31,6 @@ const AssignmentSchema = new Schema({
 		type: Number
 	}
 });
-
+z
 // eslint-disable-next-line no-undef
 module.exports = Assignment = mongoose.model("students", AssignmentSchema);

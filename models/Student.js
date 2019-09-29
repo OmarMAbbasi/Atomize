@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// const ClassSchema = require("./Class");
 
 const StudentSchema = new Schema({
 	_id: Schema.Types.ObjectId,
@@ -14,10 +13,24 @@ const StudentSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	classes: {
-		type: Date,
-		default: Date.now
-	}
+	courses: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Course"
+		}
+	],
+	assignments: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Assignment"
+		}
+	],
+	tests: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Test"
+		}
+	]
 });
 
 // eslint-disable-next-line no-undef

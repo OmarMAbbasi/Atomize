@@ -5,6 +5,11 @@ const app = express();
 const http = require("http");
 const serv = http.Server(app);
 
+//body parser for JSON
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.get("/", (req, res) => res.send("Nodemon working"));
 
 const PORT = process.env.PORT || 5000;
@@ -27,10 +32,5 @@ app.use("/api/teachers", teachers);
 const students = require("./routes/api/students");
 app.use("/api/students", students);
 
-const classes = require("./routes/api/classes");
-app.use("/api/classes", classes);
-
-//body parser for JSON
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+const courses = require("./routes/api/courses");
+app.use("/api/courses", courses);
