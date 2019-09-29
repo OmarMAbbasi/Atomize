@@ -45,14 +45,14 @@ const CourseSchema = new Schema({
 	]
 });
 
-CourseSchema.post("save", function(doc, next) {
-	doc
-		.populate("user")
-		.execPopulate()
-		.then(function() {
-			next();
-		});
-});
+// CourseSchema.post("save", function(doc, next) {
+// 	doc
+// 		.populate("user")
+// 		.execPopulate()
+// 		.then(function() {
+// 			next();
+// 		});
+// });
 
 // eslint-disable-next-line no-undef
 module.exports = CourseSchema;
