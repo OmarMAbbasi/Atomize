@@ -71,13 +71,38 @@ router.patch("/", (req, res) => {
 			case "addStudent":
 				Student.findByIdAndUpdate(
 					{ _id: req.body.student._id },
-					{ $push: { courseIds: req.body.course._id } }
+					{ $push: { courseIds: req.body.course._id } },
+					{ new: true },
+					(err, student) => {
+						if (err) return res.status(500).send(err);
+						Course.findOneAndUpdate(
+							{ _id: req.body.course._id },
+							{ $push: { studentIds: student._id } },
+							{ new: true },
+							(err, course) => {
+								let payload = {
+									courses: {
+										[course._id]: coursePayload(course)
+									},
+									students: indexPayload(course.studentIds)
+								};
+								res.json(payload);
+							}
+						);
+					}
+				);
+				break;
+			case "dropStudent":
+				Student.findByIdAndUpdate(
+					{ _id: req.body.student._id },
+					{ $pull: { courseIds: req.body.course._id } }
 				).exec((err, student) => {
 					if (err) return res.status(500).send(err);
 					Course.updateOne(
 						{ _id: req.body.course._id },
-						{ $push: { studentIds: student._id } }
+						{ $pull: { studentIds: student._id } }
 					).exec(() => {
+						course.save();
 						let payload = {
 							courses: {
 								[course._id]: coursePayload(course)
@@ -86,16 +111,6 @@ router.patch("/", (req, res) => {
 						};
 						res.json(payload);
 					});
-					// course.studentIds.push(student._id);
-					// course.save().then(() => {
-					// 	let payload = {
-					// 		courses: {
-					// 			[course._id]: coursePayload(course)
-					// 		},
-					// 		students: indexPayload(course.studentIds)
-					// 	};
-					// 	res.json(payload);
-					// });
 				});
 				break;
 
@@ -103,8 +118,6 @@ router.patch("/", (req, res) => {
 				break;
 			}
 		});
-	
 });
-
 
 module.exports = router;
