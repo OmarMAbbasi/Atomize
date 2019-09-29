@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { Course, Teacher, Student } = require("../../models");
 const { indexPayload, coursePayload } = require("./apiUtils");
 
-router.get("/test", (req, res) =>
+router.get("/", (req, res) =>
 	Course.find()
 		.populate({ path: "teacherId", select: "name" })
 		.exec((err, course) => {
@@ -12,8 +12,8 @@ router.get("/test", (req, res) =>
 		})
 );
 
-router.get("/", (req, res) => {
-	Course.findById(req.body.course._id)
+router.get("/:id", (req, res) => {
+	Course.findById(req.params.id)
 		.populate({ path: "teacherId", select: "name" })
 		.exec((err, course) => {
 			console.log(course);
@@ -118,7 +118,10 @@ router.patch("/", (req, res) => {
 			);
 			break;
 		case "updateDetails":
+			console.log(course);
 			Object.assign(course, req.body.course);
+			course.save();
+			console.log(course);
 			payload = {
 				courses: {
 					[course._id]: coursePayload(course)
