@@ -13,7 +13,18 @@ class Landing extends Component {
 	componentDidUpdate(prevProps, prevState) {}
 
 	render() {
-		return <div>This Is the landing page</div>;
+		return (
+			<div className="app-nest">
+				<div className="app-hat">
+					<div className="profile-anchor"></div>
+					<div className="header"></div>
+				</div>
+				<div className="app-body">
+					<div className="toolkit"></div>
+					<div className="viewport"></div>
+				</div>
+			</div>
+		);
 	}
 }
 

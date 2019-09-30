@@ -1,0 +1,50 @@
+.app-nest {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.app-hat {
+	height: 10vh;
+	display: flex;
+	justify-content: flex-start;
+	border: 0.2px solid lightcyan;
+	background-color: lightblue;
+	border-top: 0px;
+}
+.profile-anchor {
+	height: 10vh;
+	width: 10vh;
+	background-color: #7289da70;
+	border-left: 0;
+	border-right: 0.2px, solid, lightcyan;
+	z-index: 5;
+}
+
+.header {
+	flex-grow: 1;
+	z-index: 0;
+	height: 100%;
+	background-color: #7289da50;
+	border-left: 0.2px solid lightcyan;
+}
+.app-body {
+	display: flex;
+	flex-grow: 45;
+	min-width: 25px;
+	background-color: lightblue;
+}
+.toolkit {
+	flex-shrink: 0;
+	height: 100%;
+	width: 10vh;
+	border-left: 0;
+	border-right: 0.2px, solid, lightcyan;
+	background-color: #7289da50;
+	z-index: 0;
+}
+.viewport {
+	flex-grow: 1;
+	flex-basis: 100%;
+	background-color: aliceblue;
+}
