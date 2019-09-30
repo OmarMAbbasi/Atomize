@@ -31,10 +31,10 @@ export const newStudent = data => dispatch => (
 
 
 //! Edit/Update Student
-export const UPDATE_Student = "UPDATE_Student";
+export const UPDATE_STUDENT = "UPDATE_STUDENT";
 
 export const updateStudent = payload => ({
-  type: UPDATE_Student,
+  type: UPDATE_STUDENT,
   payload
 });
 

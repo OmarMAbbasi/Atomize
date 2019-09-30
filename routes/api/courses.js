@@ -21,7 +21,7 @@ router.get("/:id", (req, res) => {
 		.exec((err, course) => {
 			if (err) return res.status(500).send(err);
 			let payload = coursePayload(course);
-			payload.teachers = { [course.teacherId._id]: course.teacherId };
+			// payload.teachers = { [course.teacherId._id]: course.teacherId };
 			res.json(payload);
 		});
 });
@@ -66,66 +66,66 @@ router.patch("/", (req, res) => {
 		if (err) return res.status(500).send(err); //TODO In model validation before save to prevent saving incorrect student
 		let payload;
 		switch (req.body.options) {
-		case "addStudent":
-			Student.findByIdAndUpdate(
-				{ _id: req.body.student._id },
-				{ $push: { courseIds: req.body.course._id } },
-				{ new: true },
-				(err, student) => {
-					if (err) return res.status(500).send(err);
-					Course.findOneAndUpdate(
-						{ _id: req.body.course._id },
-						{ $push: { studentIds: student._id } },
-						{ new: true }
-					)
-						.populate({ path: "studentIds", select: ["name", "notes"] })
-						.exec((err, course) => {
-							if (err) return res.status(500).send(err);
+			case "addStudent":
+				Student.findByIdAndUpdate(
+					{ _id: req.body.student._id },
+					{ $push: { courseIds: req.body.course._id } },
+					{ new: true },
+					(err, student) => {
+						if (err) return res.status(500).send(err);
+						Course.findOneAndUpdate(
+							{ _id: req.body.course._id },
+							{ $push: { studentIds: student._id } },
+							{ new: true }
+						)
+							.populate({ path: "studentIds", select: ["name", "notes"] })
+							.exec((err, course) => {
+								if (err) return res.status(500).send(err);
 
-							// let courseData = coursePayload(course);
-							// console.log(courseData);
-							payload = coursePayload(course);
-							res.json(payload);
-						});
-				}
-			).catch(err => {
-				console.log(err);
-			});
-			break;
-		case "dropStudent":
-			Student.findByIdAndUpdate(
-				{ _id: req.body.student._id },
-				{ $pull: { courseIds: req.body.course._id } },
-				{ new: true },
-				(err, student) => {
-					if (err) return res.status(500).send(err);
-					Course.findOneAndUpdate(
-						{ _id: req.body.course._id },
-						{ $pull: { studentIds: student._id } },
-						{ new: true }
-					)
-						.populate({ path: "studentIds", select: ["name", "notes"] })
-						.exec((err, course) => {
-							if (err) return res.status(500).send(err);
-							payload = coursePayload(course);
-							res.json(payload);
-						});
-				}
-			);
-			break;
-		case "updateDetails":
-			Object.assign(course, req.body.course);
-			course.save();
-			payload = {
-				courses: {
-					[course._id]: coursePayload(course)
-				},
-				students: indexPayload(course.studentIds)
-			};
-			res.json(payload);
-			break;
-		default:
-			break;
+								// let courseData = coursePayload(course);
+								// console.log(courseData);
+								payload = coursePayload(course);
+								res.json(payload);
+							});
+					}
+				).catch(err => {
+					console.log(err);
+				});
+				break;
+			case "dropStudent":
+				Student.findByIdAndUpdate(
+					{ _id: req.body.student._id },
+					{ $pull: { courseIds: req.body.course._id } },
+					{ new: true },
+					(err, student) => {
+						if (err) return res.status(500).send(err);
+						Course.findOneAndUpdate(
+							{ _id: req.body.course._id },
+							{ $pull: { studentIds: student._id } },
+							{ new: true }
+						)
+							.populate({ path: "studentIds", select: ["name", "notes"] })
+							.exec((err, course) => {
+								if (err) return res.status(500).send(err);
+								payload = coursePayload(course);
+								res.json(payload);
+							});
+					}
+				);
+				break;
+			case "updateDetails":
+				Object.assign(course, req.body.course);
+				course.save();
+				payload = {
+					courses: {
+						[course._id]: coursePayload(course)
+					},
+					students: indexPayload(course.studentIds)
+				};
+				res.json(payload);
+				break;
+			default:
+				break;
 		}
 	});
 });
