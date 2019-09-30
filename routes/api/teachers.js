@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const { Course, Teacher } = require("../../models");
-const { indexPayload } = require("./apiUtils");
+const { shapeTeacherResponse, indexPayload } = require("./apiUtils");
 
 // const Teacher = require("../../models/Teacher");
 
 router.get("/test", (req, res) => {
 	Teacher.find().exec((err, teacher) => {
+		if (err) return res.status(500).send(err);
+
 		res.json(teacher);
 	});
 });
@@ -16,10 +18,14 @@ router.get("/", (req, res) => {
 	Teacher.findById(req.body.teacher._id)
 		.populate({
 			path: "courseIds",
-			select: ["subject", "year", "term", "period", "grade", "teacherId"]
+			select: ["subject", "year", "term", "period", "grade", "teacherId"],
+			populate: { path: "studentIds", select: [] }
 		})
 		.exec((err, teacher) => {
-			console.log(teacher);
+			let courseData = indexPayload(teacher.courseIds);
+			let { courses, students } = shapeTeacherResponse(courseData);
+			console.log(courses);
+			if (err) return res.status(500).send(err);
 			let payload = {
 				teachers: {
 					[teacher._id]: {
@@ -28,7 +34,8 @@ router.get("/", (req, res) => {
 						email: teacher.email
 					}
 				},
-				courses: indexPayload(teacher.courseIds)
+				courses: courses,
+				students: students
 			};
 			res.json(payload);
 		});

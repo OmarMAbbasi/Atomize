@@ -5,6 +5,8 @@ const { indexPayload } = require("./apiUtils");
 
 router.get("/", (req, res) => {
 	Student.find().exec((err, students) => {
+		if (err) return res.status(500).send(err);
+
 		res.json(students);
 	});
 });
@@ -16,7 +18,8 @@ router.get("/:id", (req, res) => {
 			select: ["subject", "year", "term", "period", "grade", "teacherId"]
 		})
 		.exec((err, student) => {
-			console.log(student.courseIds);
+			if (err) return res.status(500).send(err);
+
 			let payload = {
 				student: {
 					[student._id]: {
@@ -27,9 +30,8 @@ router.get("/:id", (req, res) => {
 						notes: student.notes
 					}
 				},
-				courses: indexPayload(student.courseIds)
+				courses: indexPayload(student.courseIds) || {}
 			};
-			console.log(payload);
 			res.json(payload);
 		});
 });
@@ -71,7 +73,7 @@ router.patch("/", (req, res) => {
 			select: ["subject", "year", "term", "period", "grade", "teacherId"]
 		})
 		.exec((err, student) => {
-			console.log(student);
+			if (err) return res.status(500).send(err);
 			let payload = {
 				student: {
 					[student._id]: {

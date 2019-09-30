@@ -7,28 +7,28 @@ const { indexPayload, coursePayload } = require("./apiUtils");
 router.get("/", (req, res) =>
 	Course.find()
 		.populate({ path: "teacherId", select: "name" })
+		.populate({ path: "studentIds", select: ["name", "notes"] })
 		.exec((err, course) => {
+			if (err) return res.status(500).send(err);
 			res.json(course);
 		})
 );
 
 router.get("/:id", (req, res) => {
 	Course.findById(req.params.id)
-		.populate({ path: "teacherId", select: "name" })
+		.populate([{ path: "studentIds", select: "name" }])
+		.populate([{ path: "teacherId", select: "name" }])
 		.exec((err, course) => {
-			console.log(course);
-			let payload = {
-				teachers: { [course.teacherId._id]: course.teacherId },
-				courses: {
-					[course._id]: coursePayload(course)
-				}
-			};
+			if (err) return res.status(500).send(err);
+			let payload = coursePayload(course);
+			payload.teachers = { [course.teacherId._id]: course.teacherId };
 			res.json(payload);
 		});
 });
 
 router.post("/", (req, res) => {
 	Teacher.findById(req.body.teacher._id).exec((err, teacher) => {
+		if (err) return res.status(500).send(err);
 		const newCourse = new Course({
 			subject: req.body.course.subject,
 			year: req.body.course.year,
@@ -43,10 +43,9 @@ router.post("/", (req, res) => {
 			.then(course => {
 				teacher.courseIds.push(course._id);
 				teacher.save();
-				console.log(course);
 				let payload = {
 					courses: {
-						[course._id]: coursePayload(course)
+						[course._id]: coursePayload(course).courses
 					},
 					teachers: {
 						[teacher._id]: {
@@ -79,18 +78,19 @@ router.patch("/", (req, res) => {
 						{ $push: { studentIds: student._id } },
 						{ new: true }
 					)
-						.populate({ path: "studentIds", select: "name" })
+						.populate({ path: "studentIds", select: ["name", "notes"] })
 						.exec((err, course) => {
-							payload = {
-								courses: {
-									[course._id]: coursePayload(course)
-								},
-								students: indexPayload(course.studentIds)
-							};
+							if (err) return res.status(500).send(err);
+
+							// let courseData = coursePayload(course);
+							// console.log(courseData);
+							payload = coursePayload(course);
 							res.json(payload);
 						});
 				}
-			);
+			).catch(err => {
+				console.log(err);
+			});
 			break;
 		case "dropStudent":
 			Student.findByIdAndUpdate(
@@ -104,24 +104,18 @@ router.patch("/", (req, res) => {
 						{ $pull: { studentIds: student._id } },
 						{ new: true }
 					)
-						.populate({ path: "studentIds", select: "name" })
+						.populate({ path: "studentIds", select: ["name", "notes"] })
 						.exec((err, course) => {
-							payload = {
-								courses: {
-									[course._id]: coursePayload(course)
-								},
-								students: indexPayload(course.studentIds)
-							};
+							if (err) return res.status(500).send(err);
+							payload = coursePayload(course);
 							res.json(payload);
 						});
 				}
 			);
 			break;
 		case "updateDetails":
-			console.log(course);
 			Object.assign(course, req.body.course);
 			course.save();
-			console.log(course);
 			payload = {
 				courses: {
 					[course._id]: coursePayload(course)
@@ -151,6 +145,9 @@ router.delete("/", (req, res) => {
 					select: ["subject", "year", "term", "period", "grade", "teacherId"]
 				})
 				.exec((err, teacher) => {
+					if (err) return res.status(500).send(err);
+
+					console.log(course);
 					let payload = {
 						teachers: {
 							[teacher._id]: {
