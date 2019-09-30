@@ -17,6 +17,11 @@ export const patchCourse = data => {
 	return axios.patch(`api/courses`, data);
 };
 
-export const deleteCourse = data => {
-	return axios.delete(`api/courses`, data);
+export const deleteCourse = ({ teachers, courses }) => {
+	return axios.delete(`api/courses`, {
+		params: {
+			teachers: teachers._id,
+			courses: courses._id
+		}
+	});
 };

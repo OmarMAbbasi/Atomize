@@ -61,14 +61,16 @@ const coursePayload = (course, student) => {
 	let students = indexPayload(course.studentIds);
 	let payload = {
 		courses: {
-			_id: course._id,
-			subject: course.subject,
-			year: course.year,
-			term: course.term,
-			period: course.period,
-			grade: course.grade,
-			teacherId: course.teacherId._id || course.teacherId,
-			studentIds: Object.keys(students)
+			[course._id]: {
+				_id: course._id,
+				subject: course.subject,
+				year: course.year,
+				term: course.term,
+				period: course.period,
+				grade: course.grade,
+				teacherId: course.teacherId._id || course.teacherId,
+				studentIds: Object.keys(students)
+			}
 		},
 		students: students
 	};

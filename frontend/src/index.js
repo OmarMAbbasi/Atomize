@@ -32,64 +32,94 @@ document.addEventListener("DOMContentLoaded", () => {
 	window.deleteCourse = deleteCourse;
 
 	// let teacher = {
-	// 	_id: "5d919f82d5c6aa38edf30c4b"
+	// _id: "5d919f82d5c6aa38edf30c4b"
 	// };
 	// window.dispatch(window.getCurrentTeacher(teacher));
 
-	let student;
+	// let currentStudent = {
+	// _id: "5d91f320a00e3d25b0dfc5c3"
+	// };
+	// window.dispatch(window.fetchStudent(currentStudent));
 
-	student = { _id: "5d917ebdbbf3855dcd8b51c6" };
-	window.dispatch(window.fetchStudent(student));
-
-	// student = {
+	// let transferStudent = {
 	// 	name: "Jaimie Johnson",
 	// 	age: "38",
 	// 	grade: "10"
 	// };
-	// window.dispatch(window.newStudent(student));
+	// window.dispatch(window.newStudent(transferStudent));
 
-	// student = {
-	// 	_id: "5d917ebdbbf3855dcd8b51c6",
+	// let growingStudent = {
+	// 	_id: "5d91f320a00e3d25b0dfc5c3",
 	// 	name: "Jaimie Johnson",
 	// 	age: 15,
 	// 	grade: 12,
 	// 	notes: "Held Back"
 	// };
-	// window.dispatch(window.editStudent(student));
+	// window.dispatch(window.editStudent(growingStudent));
 
-	// let course = { _id: "5d917e63bbf3855dcd8b51c3" };
-	// window.dispatch(window.fetchCourse(course));
+	// //
+	// let newCourseData = {
+	// 	courses: {
+	// 		subject: "Physics",
+	// 		year: "2018",
+	// 		term: "Spring",
+	// 		period: "1",
+	// 		grade: "3"
+	// 	},
+	// 	teachers: {
+	// 		_id: "5d917e3fbbf3855dcd8b51c2"
+	// 	}
+	// };
+	// window.dispatch(window.newCourse(newCourseData));
 
-	let newCourseData = {
-		course: {
-			subject: "Physics",
-			year: "2018",
-			term: "Spring",
-			period: "1",
-			grade: "3"
-		},
-		teacher: {
-			_id: "5d917e3fbbf3855dcd8b51c2"
-		}
-	};
-	window.dispatch(window.newCourse());
+	// let existingCourse = {
+	// 	_id: "5d91f5672a2482392faf8ad5"
+	// };
+	// window.dispatch(window.fetchCourse(existingCourse));
 
-	let oldCourseData = {
-		courses: {
-			subject: "Physics",
-			year: "2018",
-			term: "Spring",
-			period: "1",
-			grade: "3"
-		},
-		teachers: {
-			_id: "5d917e3fbbf3855dcd8b51c2"
-		}
-	};
-	window.dispatch(window.editCourse());
+	// let purgeCourseData = {
+	// 	courses: { _id: "5d91f5672a2482392faf8ad5" },
+	// 	teachers: { _id: "5d917e3fbbf3855dcd8b51c2" }
+	// };
+	// window.dispatch(window.deleteCourse(purgeCourseData));
 
-	let purgeCourseData;
-	// window.dispatch(window.deleteCourse());
+	// let addStudent = {
+	// 	courses: {
+	// 		_id: "5d91f5672a2482392faf8ad5"
+	// 	},
+	// 	students: {
+	// 		_id: "5d91d7155ce12c11cbde02f9"
+	// 	},
+	// 	options: "addStudent"
+	// };
+	// window.dispatch(window.editCourse(addStudent));
+
+	// let dropStudent = {
+	// 	courses: {
+	// 		_id: "5d91f5672a2482392faf8ad5"
+	// 	},
+	// 	students: {
+	// 		_id: "5d91d7155ce12c11cbde02f9"
+	// 	},
+	// 	options: "dropStudent"
+	// };
+	// window.dispatch(window.editCourse(dropStudent));
+
+	// let updateDetails = {
+	// 	courses: {
+	// 		_id: "5d91f5672a2482392faf8ad5",
+	// 		subject: "Physics",
+	// 		year: "2018",
+	// 		term: "Spring",
+	// 		period: "1",
+	// 		grade: "3"
+	// 	},
+	// 	teachers: {
+	// 		_id: "5d917e3fbbf3855dcd8b51c2"
+	// 	},
+	// 	options: "updateDetails"
+	// };
+	// window.dispatch(window.editCourse(updateDetails));
 
 	ReactDOM.render(<Root store={store} />, root);
 });

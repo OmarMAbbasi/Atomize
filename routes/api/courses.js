@@ -19,8 +19,8 @@ router.get("/:_id", (req, res) => {
 		.populate([{ path: "studentIds", select: "name" }])
 		.populate([{ path: "teacherId", select: "name" }])
 		.exec((err, course) => {
-			if (err) return res.status(500).send(err);
 			console.log(course);
+			if (err) return res.status(500).send(err);
 			let payload = coursePayload(course);
 			// payload.teachers = { [course.teacherId._id]: course.teacherId };
 			res.json(payload);
@@ -28,14 +28,14 @@ router.get("/:_id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-	Teacher.findById(req.body.teacher._id).exec((err, teacher) => {
+	Teacher.findById(req.body.teachers._id).exec((err, teacher) => {
 		if (err) return res.status(500).send(err);
 		const newCourse = new Course({
-			subject: req.body.course.subject,
-			year: req.body.course.year,
-			term: req.body.course.term,
-			period: req.body.course.period,
-			grade: req.body.course.grade,
+			subject: req.body.courses.subject,
+			year: req.body.courses.year,
+			term: req.body.courses.term,
+			period: req.body.courses.period,
+			grade: req.body.courses.grade,
 			teacherId: teacher._id
 		});
 
@@ -63,19 +63,19 @@ router.post("/", (req, res) => {
 });
 
 router.patch("/", (req, res) => {
-	Course.findById(req.body.course._id).exec((err, course) => {
+	Course.findById(req.body.courses._id).exec((err, course) => {
 		if (err) return res.status(500).send(err); //TODO In model validation before save to prevent saving incorrect student
 		let payload;
 		switch (req.body.options) {
 			case "addStudent":
 				Student.findByIdAndUpdate(
-					{ _id: req.body.student._id },
-					{ $push: { courseIds: req.body.course._id } },
+					{ _id: req.body.students._id },
+					{ $push: { courseIds: req.body.courses._id } },
 					{ new: true },
 					(err, student) => {
 						if (err) return res.status(500).send(err);
 						Course.findOneAndUpdate(
-							{ _id: req.body.course._id },
+							{ _id: req.body.courses._id },
 							{ $push: { studentIds: student._id } },
 							{ new: true }
 						)
@@ -95,13 +95,13 @@ router.patch("/", (req, res) => {
 				break;
 			case "dropStudent":
 				Student.findByIdAndUpdate(
-					{ _id: req.body.student._id },
-					{ $pull: { courseIds: req.body.course._id } },
+					{ _id: req.body.students._id },
+					{ $pull: { courseIds: req.body.courses._id } },
 					{ new: true },
 					(err, student) => {
 						if (err) return res.status(500).send(err);
 						Course.findOneAndUpdate(
-							{ _id: req.body.course._id },
+							{ _id: req.body.courses._id },
 							{ $pull: { studentIds: student._id } },
 							{ new: true }
 						)
@@ -115,14 +115,10 @@ router.patch("/", (req, res) => {
 				);
 				break;
 			case "updateDetails":
-				Object.assign(course, req.body.course);
+				console.log(req.body.courses);
+				course = Object.assign(course, req.body.courses);
 				course.save();
-				payload = {
-					courses: {
-						[course._id]: coursePayload(course)
-					},
-					students: indexPayload(course.studentIds)
-				};
+				payload = coursePayload(course);
 				res.json(payload);
 				break;
 			default:
@@ -132,35 +128,33 @@ router.patch("/", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-	Teacher.findById(req.body.teacher._id).exec((err, teacher) => {
+	console.log(req.query);
+	Course.findOneAndRemove({ _id: req.query.courses }, (err, course) => {
 		if (err) return res.status(500).send(err);
-		Course.findOneAndRemove({ _id: req.body.course._id }, (err, course) => {
-			if (err) return res.status(500).send(err);
-			Teacher.findOneAndUpdate(
-				{ _id: req.body.teacher._id },
-				{ $pull: { courseIds: req.body.course._id } },
-				{ new: true }
-			)
-				.populate({
-					path: "courseIds",
-					select: ["subject", "year", "term", "period", "grade", "teacherId"]
-				})
-				.exec((err, teacher) => {
-					if (err) return res.status(500).send(err);
+		Teacher.findOneAndUpdate(
+			{ _id: req.query.teachers },
+			{ $pull: { courseIds: course._id } },
+			{ new: true }
+		)
+			.populate({
+				path: "courseIds",
+				select: ["subject", "year", "term", "period", "grade", "teacherId"]
+			})
+			.exec((err, teacher) => {
+				if (err) return res.status(500).send(err);
 
-					let payload = {
-						teachers: {
-							[teacher._id]: {
-								_id: teacher._id,
-								name: teacher.name,
-								email: teacher.email
-							}
-						},
-						courses: indexPayload(teacher.courseIds)
-					};
-					res.json(payload);
-				});
-		});
+				let payload = {
+					teachers: {
+						[teacher._id]: {
+							_id: teacher._id,
+							name: teacher.name,
+							email: teacher.email
+						}
+					},
+					courses: indexPayload(teacher.courseIds)
+				};
+				res.json(payload);
+			});
 	});
 });
 
