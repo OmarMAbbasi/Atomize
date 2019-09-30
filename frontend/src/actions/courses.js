@@ -31,10 +31,10 @@ export const newCourse = data => dispatch => (
 
 
 //! Edit/Update Course
-export const UPDATE_POST = "UPDATE_POST";
+export const UPDATE_COURSE = "UPDATE_COURSE";
 
 export const updateCourse = payload => ({
-  type: UPDATE_POST,
+  type: UPDATE_COURSE,
   payload
 });
 
@@ -45,7 +45,7 @@ export const editCourse = data => dispatch => (
 );
 
 
-
+//!Destroy/Delete Course
 export const DESTORY_COURSE = "DESTORY_COURSE";
 
 export const destroyCourse = payload => ({
