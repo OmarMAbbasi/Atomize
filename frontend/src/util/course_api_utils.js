@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//! Testing Purposes
 export const getCourses = (data) => {
     return axios.get('/api/courses', data)
 };
