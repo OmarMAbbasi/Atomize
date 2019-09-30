@@ -6,7 +6,7 @@ import "./index.css";
 import Root from "./components/root";
 import configureStore from "./store/store";
 
-import Atomize from "./Atomize";
+import Atomize from "./components/Atomize";
 import * as serviceWorker from "./serviceWorker";
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -1,12 +1,10 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./Atomize.css";
+import "../style/Atomize.css";
 
 function Atomize() {
 	return (
 		<div className="Atomize">
 			<header className="Atomize-header">
-				<img src={logo} className="Atomize-logo" alt="logo" />
 				<p>
 					Edit <code>src/Atomize.jsx</code> and save to reload.
 				</p>
