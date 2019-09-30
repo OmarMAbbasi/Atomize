@@ -1,13 +1,16 @@
-import React from "react";
-import { AuthRoute, ProtectedRoute } from "../util/route_util";
-import { Switch } from "react-router-dom";
+// import React from "react";
+// import "../style/Atomize.css";
+// import { Switch, Route } from "react-router-dom";
+// import LandingContainer from "./landing_container";
 
-const App = () => (
-	<div>
-		<Switch>
-			<Route exact path="/" component={} />
-		</Switch>
-	</div>
-);
+// function Atomize() {
+// 	return (
+// 		<div>
+// 			<Switch>
+// 				<Route exact path="/" component={LandingContainer} />
+// 			</Switch>
+// 		</div>
+// 	);
+// }
 
-export default App;
+// export default Atomize;

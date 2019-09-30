@@ -11,8 +11,8 @@ router.get("/", (req, res) => {
 	});
 });
 
-router.get("/:id", (req, res) => {
-	Student.findById(req.params.id)
+router.get("/:_id", (req, res) => {
+	Student.findById(req.params._id)
 		.populate({
 			path: "courseIds",
 			select: ["subject", "year", "term", "period", "grade", "teacherId"]
@@ -21,7 +21,7 @@ router.get("/:id", (req, res) => {
 			if (err) return res.status(500).send(err);
 
 			let payload = {
-				student: {
+				students: {
 					[student._id]: {
 						_id: student._id,
 						name: student.name,
@@ -37,17 +37,18 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+	console.log(req.body);
 	const newStudent = new Student({
-		name: req.body.student.name,
-		age: req.body.student.age,
-		grade: req.body.student.grade,
-		notes: req.body.student.notes ? req.body.student.notes : null
+		name: req.body.name,
+		age: req.body.age,
+		grade: req.body.grade,
+		notes: req.body.notes ? req.body.notes : null
 	});
 	newStudent
 		.save()
 		.then(student => {
 			let payload = {
-				student: {
+				students: {
 					[student._id]: {
 						_id: student._id,
 						name: student.name,
@@ -64,8 +65,8 @@ router.post("/", (req, res) => {
 
 router.patch("/", (req, res) => {
 	Student.findByIdAndUpdate(
-		{ _id: req.body.student._id },
-		{ $set: req.body.student },
+		{ _id: req.body._id },
+		{ $set: req.body },
 		{ new: true }
 	)
 		.populate({
@@ -75,7 +76,7 @@ router.patch("/", (req, res) => {
 		.exec((err, student) => {
 			if (err) return res.status(500).send(err);
 			let payload = {
-				student: {
+				students: {
 					[student._id]: {
 						_id: student._id,
 						name: student.name,

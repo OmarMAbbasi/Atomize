@@ -14,12 +14,13 @@ router.get("/", (req, res) =>
 		})
 );
 
-router.get("/:id", (req, res) => {
-	Course.findById(req.params.id)
+router.get("/:_id", (req, res) => {
+	Course.findById(req.params._id)
 		.populate([{ path: "studentIds", select: "name" }])
 		.populate([{ path: "teacherId", select: "name" }])
 		.exec((err, course) => {
 			if (err) return res.status(500).send(err);
+			console.log(course);
 			let payload = coursePayload(course);
 			// payload.teachers = { [course.teacherId._id]: course.teacherId };
 			res.json(payload);
@@ -147,7 +148,6 @@ router.delete("/", (req, res) => {
 				.exec((err, teacher) => {
 					if (err) return res.status(500).send(err);
 
-					console.log(course);
 					let payload = {
 						teachers: {
 							[teacher._id]: {

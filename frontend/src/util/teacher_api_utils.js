@@ -1,5 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const getCurrentTeacher = (data) => {
-    return axios.get('/api/teachers')
+export const getCurrentTeacher = data => {
+	return axios.get("/api/teachers", { params: data });
 };

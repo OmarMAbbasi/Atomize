@@ -15,7 +15,7 @@ router.get("/test", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-	Teacher.findById(req.body.teacher._id)
+	Teacher.findById(req.query._id)
 		.populate({
 			path: "courseIds",
 			select: ["subject", "year", "term", "period", "grade", "teacherId"],
@@ -24,7 +24,6 @@ router.get("/", (req, res) => {
 		.exec((err, teacher) => {
 			let courseData = indexPayload(teacher.courseIds);
 			let { courses, students } = shapeTeacherResponse(courseData);
-			console.log(courses);
 			if (err) return res.status(500).send(err);
 			let payload = {
 				teachers: {

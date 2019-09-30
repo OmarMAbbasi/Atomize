@@ -1,22 +1,14 @@
 import React from "react";
 import "../style/Atomize.css";
+import { Switch, Route } from "react-router-dom";
+import LandingContainer from "./landing_container";
 
 function Atomize() {
 	return (
-		<div className="Atomize">
-			<header className="Atomize-header">
-				<p>
-					Edit <code>src/Atomize.jsx</code> and save to reload.
-				</p>
-				<a
-					className="Atomize-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
+		<div>
+			<Switch>
+				<Route exact path="/" component={LandingContainer} />
+			</Switch>
 		</div>
 	);
 }

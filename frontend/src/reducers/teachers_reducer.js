@@ -10,13 +10,13 @@ const teachersReducer = (oldState, action) => {
 	let newState = Object.assign({}, oldState);
 	switch (action.type) {
 		case RECEIVE_CURRENT_TEACHER:
-			Object.assign(newState, action.payload.teachers);
+			Object.assign(newState, action.payload.data.teachers);
 			return newState;
 		case CREATE_NEW_COURSE:
-			Object.assign(newState, action.payload.teachers);
+			Object.assign(newState, action.payload.data.teachers);
 			return newState;
 		case DESTORY_COURSE:
-			Object.assign(newState, action.payload.teachers);
+			Object.assign(newState, action.payload.data.teachers);
 			return newState;
 		default:
 			return oldState;

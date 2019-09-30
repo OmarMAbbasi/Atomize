@@ -21,25 +21,25 @@ const studentsReducer = (oldState, action) => {
 
 	switch (action.type) {
 		case RECEIVE_CURRENT_TEACHER:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 		case RECEIVE_STUDENT:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 		case CREATE_NEW_STUDENT:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 		case UPDATE_STUDENT:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 		case RECEIVE_COURSE:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 		case UPDATE_COURSE:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 		case DESTORY_COURSE:
-			Object.assign(newState, action.payload.students);
+			Object.assign(newState, action.payload.data.students);
 			return newState;
 
 		default:
