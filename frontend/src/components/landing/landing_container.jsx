@@ -1,19 +1,20 @@
 import { connect } from "react-redux";
-import { getCurrentTeacher } from "../actions/teachers";
+import {} from "../../actions/teachers";
 import Landing from "./landing";
 
 const mapStateToProps = (state, ownProps) => {
 	return {
 		state,
 		ownProps,
-		currentTeacher: state.entities.currentTeacher
+		currentTeacher: state.entities.currentTeacher,
+		courses: Object.values(state.entities.courses).filter(
+			course => course.teacherId === state.entities.currentTeacher._id
+		)
 	};
 };
 
 const mapDispatchToProps = dispatch => {
-	return {
-		getCurrentTeacher: data => dispatch(getCurrentTeacher(data))
-	};
+	return {};
 };
 
 export default connect(

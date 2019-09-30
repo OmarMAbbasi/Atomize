@@ -5,6 +5,10 @@ export const getStudents = data => {
 	return axios.get("/api/students", data);
 };
 
+export const searchStudents = data => {
+	return axios.get("/api/students/search", {params: data})
+}
+
 export const getStudent = data => {
 	return axios.get(`/api/students/${data._id}`, data);
 };

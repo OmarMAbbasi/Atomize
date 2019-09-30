@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Toolkit from "../toolkit/toolkit";
+import SchoolIcon from "../../Icons/School.js";
 
 class Landing extends Component {
 	constructor(props) {
@@ -16,11 +18,17 @@ class Landing extends Component {
 		return (
 			<div className="app-nest">
 				<div className="app-hat">
-					<div className="profile-anchor"></div>
+					<div>
+						<div className="profile-anchor">
+							<SchoolIcon />
+						</div>
+					</div>
 					<div className="header"></div>
 				</div>
 				<div className="app-body">
-					<div className="toolkit"></div>
+					<div className="toolkit">
+						<Toolkit />
+					</div>
 					<div className="viewport"></div>
 				</div>
 			</div>

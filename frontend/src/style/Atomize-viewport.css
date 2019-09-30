@@ -15,7 +15,7 @@
 .profile-anchor {
 	height: 10vh;
 	width: 10vh;
-	background-color: #7289da70;
+	background-color: #7289da50;
 	border-left: 0;
 	border-right: 0.2px, solid, lightcyan;
 	z-index: 5;
@@ -35,8 +35,11 @@
 	background-color: lightblue;
 }
 .toolkit {
-	flex-shrink: 0;
-	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	flex-shrink: 0;	
+	height: 100;
 	width: 10vh;
 	border-left: 0;
 	border-right: 0.2px, solid, lightcyan;
