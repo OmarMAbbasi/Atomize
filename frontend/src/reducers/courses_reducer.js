@@ -1,4 +1,4 @@
-import { RECEIVE_CURRENT_TEACHER } from "../actions/teacher";
+import { RECEIVE_CURRENT_TEACHER } from "../actions/teachers";
 import { RECEIVE_STUDENT } from "../actions/students";
 import {
 	RECEIVE_COURSE,

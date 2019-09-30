@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthRoutae, ProtectedRoute } from "../util/route_util";
+import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import { Switch } from "react-router-dom";
 
 const App = () => (
