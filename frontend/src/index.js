@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	window.editCourse = editCourse;
 	window.deleteCourse = deleteCourse;
 
-	// let teacher = {
-	// _id: "5d919f82d5c6aa38edf30c4b"
-	// };
-	// window.dispatch(window.getCurrentTeacher(teacher));
+	let teacher = {
+		_id: "5d919f82d5c6aa38edf30c4b"
+	};
+	window.dispatch(window.getCurrentTeacher(teacher));
 
 	// let currentStudent = {
 	// _id: "5d91f320a00e3d25b0dfc5c3"
