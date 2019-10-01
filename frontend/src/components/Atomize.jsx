@@ -4,6 +4,7 @@ import LandingContainer from "./landing/landing_container";
 
 //!CSS
 import "../style/Atomize-viewport.css";
+import "../style/Atomize-lists.css";
 import "../style/Atomize-toolkit.css";
 import "../style/css-reset.css";
 import "../style/Atomize.css";

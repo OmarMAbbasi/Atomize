@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import SubmitIcon from "../../../../Icons/Submit";
 class HybridList extends Component {
 	constructor(props) {
 		super(props);
@@ -7,12 +7,20 @@ class HybridList extends Component {
 
 	render() {
 		return (
-			<div> View Boxes
-				<div> Courses Outer Box
-					<ul></ul> Courses Inner Box
+			<div className="viewport">
+				<div className="hybrid-students-nest">
+					<form className="student-search-nest">
+						<input className="student-search" />
+						<SubmitIcon className="submit-button" />
+					</form>
+					<ul className="hybrid-students-list"></ul>
 				</div>
-				<div>Students Outer Box
-					<ul></ul> Students Inner Box
+				<div className="hybrid-courses-nest">
+					<form className="courses-search-nest">
+						<input className="courses-search" />
+						<SubmitIcon className="submit-button" />
+					</form>
+					<ul className="hybrid-courses-list"></ul>
 				</div>
 			</div>
 		);

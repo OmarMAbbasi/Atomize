@@ -1,0 +1,74 @@
+.viewport {
+	display: flex;
+	flex-grow: 1;
+	flex-basis: 100%;
+	background-color: aliceblue;
+}
+
+.hybrid-students-nest {
+	height: 100%;
+	width: 50%;
+	background-color: purple;
+	display: flex;
+	flex-direction: column;
+}
+
+.student-search-nest {
+	padding: 10px;
+	display: flex;
+	height: 1.5em;
+}
+
+.student-search {
+	flex-grow: 1;
+	width: 80%;
+	color: pink;
+	height: 1.5em;
+	background-color: yellow;
+}
+
+.submit-button {
+	margin: 0 auto;
+	flex-grow: 0;
+	height: 100%;
+	border: 0.25em black;
+	background-color: red;
+}
+
+.hybrid-students-list {
+}
+
+.hybrid-courses-nest {
+	height: 100;
+	width: 50%;
+	background-color: pink;
+}
+
+.courses-search-nest {
+	padding: 10px;
+	display: flex;
+	height: 1.5em;
+}
+
+.courses-search {
+	flex-grow: 1;
+	width: 80%;
+	color: pink;
+	height: 1.5em;
+	background-color: yellow;
+}
+
+.hybrid-courses-list {
+}
+
+.students-nest {
+}
+
+.students-list {
+}
+
+.courses-nest {
+}
+
+.courses-list {
+}

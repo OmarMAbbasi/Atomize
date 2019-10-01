@@ -12,13 +12,11 @@ class DashController extends Component {
 	render() {
 		console.log("Hit Dash Controller");
 		return (
-			<div className="viewport">
-				<Switch>
-					<Route exact path="/students" component={StudentList} />
-					<Route exact path="/courses" component={CourseList} />
-					<Route path="/" component={HybridList} />
-				</Switch>
-			</div>
+			<Switch>
+				<Route exact path="/students" component={StudentList} />
+				<Route exact path="/courses" component={CourseList} />
+				<Route path="/" component={HybridList} />
+			</Switch>
 		);
 	}
 }
