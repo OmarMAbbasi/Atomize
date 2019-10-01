@@ -12,7 +12,7 @@ function Atomize() {
 	return (
 		<div>
 			<Switch>
-				<Route exact path="/" component={LandingContainer} />
+				<Route path="/" component={LandingContainer} />
 			</Switch>
 		</div>
 	);

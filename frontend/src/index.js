@@ -35,90 +35,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		_id: "5d924a0fbdba9714f9d22f58"
 	};
 	window.dispatch(window.getCurrentTeacher(teacher));
-	//
-	// let currentStudent = {
-	// 	_id: "5d925963f72b876a1023ea9e"
-	// };
-	// window.dispatch(window.fetchStudent(currentStudent));
 
-	// let transferStudent = {
-	// 	name: "Jaimie Johnson",
-	// 	age: "38",
-	// 	grade: "10"
-	// };
-	// window.dispatch(window.newStudent(transferStudent));
+	// batchTesting()
 
-	// let growingStudent = {
-	// 	_id: "5d925963f72b876a1023ea9e",
-	// 	name: "Jaimie Johnson",
-	// 	age: 15,
-	// 	grade: 12,
-	// 	notes: "Held Back"
-	// };
-	// window.dispatch(window.editStudent(growingStudent));
+	ReactDOM.render(<Root store={store} />, root);
+});
 
-	// let newCourseData = {
-	// 	courses: {
-	// 		subject: "Physics",
-	// 		year: "2018",
-	// 		term: "Spring",
-	// 		period: "1",
-	// 		grade: "3"
-	// 	},
-	// 	teachers: {
-	// 		_id: "5d924a0fbdba9714f9d22f58"
-	// 	}
-	// };
-	// window.dispatch(window.newCourse(newCourseData));
-	
-	// let existingCourse = {
-	// 	_id: "5d924a0fbdba9714f9d22f58"
-	// };
-	// window.dispatch(window.fetchCourse(existingCourse));
-
+const batchTesting = function() {
 	// let purgeCourseData = {
 	// 	courses: { _id: "5d928fa13d26941d7b041fea" },
 	// 	teachers: { _id: "5d924a0fbdba9714f9d22f58" }
 	// };
 	// window.dispatch(window.deleteCourse(purgeCourseData));
 
-	///
-	//
-	//
-	// let addStudent = {
-	// 	courses: {
-	// 		_id: "5d928fbea6b9df1e028547e3"
-	// 	},
-	// 	students: {
-	// 		_id: "5d928fe91858521eadd960d7"
-	// 	},
-	// 	options: "addStudent"
-	// };
-	// window.dispatch(window.editCourse(addStudent));
-
-	// let dropStudent = {
-	// 	courses: {
-	// 		_id: "5d925041bb1beb35c309138c"
-	// 	},
-	// 	students: {
-	// 		_id: "5d924a91150afe19b1eab8cc"
-	// 	},
-	// 	options: "dropStudent"
-	// };
-	// window.dispatch(window.editCourse(addStudent)).then(() => {
-	// 	window.dispatch(window.editCourse(dropStudent));
-	// });	
-	// window.dispatch(window.editCourse(updateDetails));
-	batchTesting()
-
-
-
-	ReactDOM.render(<Root store={store} />, root);
-});
-
-
-const batchTesting = function () {
-	
 	let teacher = {
 		_id: "5d924a0fbdba9714f9d22f58"
 	};
@@ -132,7 +61,7 @@ const batchTesting = function () {
 		age: "38",
 		grade: "10"
 	};
-	
+
 	let growingStudent = {
 		_id: "5d925963f72b876a1023ea9e",
 		name: "Jaimie Johnson",
@@ -197,8 +126,9 @@ const batchTesting = function () {
 						window.dispatch(window.editCourse(dropStudent)).then(() => {
 							window.dispatch(window.newCourse(newCourseData)).then(() => {
 								window.dispatch(window.fetchCourse(existingCourse)).then(() => {
-									window.dispatch(window.editCourse(updateDetails)).then(() => {
-									});
+									window
+										.dispatch(window.editCourse(updateDetails))
+										.then(() => {});
 								});
 							});
 						});
@@ -207,8 +137,7 @@ const batchTesting = function () {
 			});
 		});
 	});
- }
-
+};
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -12,8 +12,7 @@
 	background-color: lightblue;
 	border-top: 0px;
 }
-
-.profile-wrapper {
+.profile-anchor {
 	height: 10vh;
 	width: 10vh;
 	background-color: #7289da50;
@@ -21,8 +20,13 @@
 	border-right: 0.2px, solid, lightcyan;
 	z-index: 5;
 }
-.profile-anchor {
+
+.profile-nest {
+	width: 90%;
+	background-color: rgba(140, 170, 200, 5);
 	margin: 0 auto;
+	border-radius: 20%;
+	overflow: hidden;
 }
 
 .header {

@@ -6,10 +6,7 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		state,
 		ownProps,
-		currentTeacher: state.entities.currentTeacher,
-		courses: Object.values(state.entities.courses).filter(
-			course => course.teacherId === state.entities.currentTeacher._id
-		)
+		currentTeacher: state.entities.currentTeacher
 	};
 };
 
