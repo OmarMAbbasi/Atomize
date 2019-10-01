@@ -6,7 +6,7 @@ import Atomize from "./Atomize";
 const Root = ({ store }) => (
 	<Provider store={store} className="root">
 		<HashRouter>
-			<Atomize />
+			<Atomize exact path="/" />
 		</HashRouter>
 	</Provider>
 );

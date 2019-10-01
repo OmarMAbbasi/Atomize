@@ -19,8 +19,8 @@ router.get("/:_id", (req, res) => {
 		.populate([{ path: "studentIds", select: "name" }])
 		.populate([{ path: "teacherId", select: "name" }])
 		.exec((err, course) => {
-			console.log(course);
 			if (err) return res.status(500).send(err);
+			if (!course) return res.status(404).send("Course not found");
 			let payload = coursePayload(course);
 			// payload.teachers = { [course.teacherId._id]: course.teacherId };
 			res.json(payload);
@@ -42,21 +42,22 @@ router.post("/", (req, res) => {
 		newCourse
 			.save()
 			.then(course => {
-				teacher.courseIds.push(course._id);
-				teacher.save();
-				let payload = {
-					courses: {
-						[course._id]: coursePayload(course).courses
-					},
-					teachers: {
-						[teacher._id]: {
-							_id: teacher._id,
-							name: teacher.name,
-							email: teacher.email
-						}
-					}
-				};
-				res.json(payload);
+				Teacher.findByIdAndUpdate(
+					{ _id: teacher._id },
+					{ $addToSet: { courseIds: course._id } },
+					{ new: true }
+				).exec(() => {
+					let payload = coursePayload(course);
+					res.json(payload);
+				});
+
+				// teachers: {
+				// 	[teacher._id]: {
+				// 		_id: teacher._id,
+				// 		name: teacher.name,
+				// 		email: teacher.email
+				// 	}
+				// }
 			})
 			.catch(err => console.log(err));
 	});
@@ -64,27 +65,26 @@ router.post("/", (req, res) => {
 
 router.patch("/", (req, res) => {
 	Course.findById(req.body.courses._id).exec((err, course) => {
-		if (err) return res.status(500).send(err); //TODO In model validation before save to prevent saving incorrect student
+		//TODO In model validation before save to prevent saving incorrect student
+		if (err) return res.status(500).send(err);
 		let payload;
 		switch (req.body.options) {
 			case "addStudent":
 				Student.findByIdAndUpdate(
 					{ _id: req.body.students._id },
-					{ $push: { courseIds: req.body.courses._id } },
+					{ $addToSet: { courseIds: req.body.courses._id } },
 					{ new: true },
 					(err, student) => {
 						if (err) return res.status(500).send(err);
 						Course.findOneAndUpdate(
 							{ _id: req.body.courses._id },
-							{ $push: { studentIds: student._id } },
+							{ $addToSet: { studentIds: student._id } },
 							{ new: true }
 						)
 							.populate({ path: "studentIds", select: ["name", "notes"] })
 							.exec((err, course) => {
 								if (err) return res.status(500).send(err);
 
-								// let courseData = coursePayload(course);
-								// console.log(courseData);
 								payload = coursePayload(course);
 								res.json(payload);
 							});
@@ -128,9 +128,9 @@ router.patch("/", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-	console.log(req.query);
 	Course.findOneAndRemove({ _id: req.query.courses }, (err, course) => {
 		if (err) return res.status(500).send(err);
+		if (!course) return res.status(404).send("Cannot delete course that doesn't exist");
 		Teacher.findOneAndUpdate(
 			{ _id: req.query.teachers },
 			{ $pull: { courseIds: course._id } },
@@ -138,10 +138,15 @@ router.delete("/", (req, res) => {
 		)
 			.populate({
 				path: "courseIds",
-				select: ["subject", "year", "term", "period", "grade", "teacherId"]
+				select: ["subject", "year", "term", "period", "grade", "teacherId"],
+				populate: { path: "studentIds", select: [] }
 			})
 			.exec((err, teacher) => {
 				if (err) return res.status(500).send(err);
+				let courses = teacher.courseIds || [];
+				let students = course.studentIds || [];
+				// console.log(course);
+				// console.log(students);
 
 				let payload = {
 					teachers: {
@@ -151,10 +156,14 @@ router.delete("/", (req, res) => {
 							email: teacher.email
 						}
 					},
-					courses: indexPayload(teacher.courseIds)
+					courses: indexPayload(courses)
 				};
-				res.json(payload);
+				Student.updateMany(
+					{ _id: { $in: students } },
+					{ $pull: { courseIds: course._id } }
+				);
 			});
+		res.json(payload);
 	});
 });
 

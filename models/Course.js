@@ -40,7 +40,8 @@ const CourseSchema = new Schema({
 	studentIds: [
 		{
 			type: Schema.Types.ObjectId,
-			ref: "Student"
+			ref: "Student",
+			default: []
 		}
 	]
 });

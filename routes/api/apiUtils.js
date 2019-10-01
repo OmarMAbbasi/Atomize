@@ -50,15 +50,16 @@ const shapeTeacherResponse = courseData => {
 // 			.exec((err, course) => {
 // 				if (err) return err;
 // 				Object.assign(students, indexPayload(course.studentIds));
-// 				console.log(students);
 // 			});
-// 		console.log(students);
 // 	});
 // 	return students;
 // };
 
 const coursePayload = (course, student) => {
-	let students = indexPayload(course.studentIds);
+	let students = course.studentIds ? course.studentIds : [];
+	students = indexPayload(students)
+	console.log(students);
+	// let students = indexPayload();
 	let payload = {
 		courses: {
 			[course._id]: {
