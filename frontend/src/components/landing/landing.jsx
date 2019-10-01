@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Toolkit from "../toolkit/toolkit";
-import SchoolIcon from "../../Icons/School.js";
 import Header from "./header";
 import DashController from "../dashboards/dash_controller";
 
