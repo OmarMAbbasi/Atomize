@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { DashController } from "./dash_controller";
+import withRouter from "./dash_controller_container";
 
 const mapStateToProps = (state, ownProps) => {
 	return {

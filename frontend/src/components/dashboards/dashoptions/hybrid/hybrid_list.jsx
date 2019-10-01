@@ -6,8 +6,16 @@ class HybridList extends Component {
 	}
 
 	render() {
-		console.log("Hit Hybrid List");
-		return <div></div>;
+		return (
+			<div> View Boxes
+				<div> Courses Outer Box
+					<ul></ul> Courses Inner Box
+				</div>
+				<div>Students Outer Box
+					<ul></ul> Students Inner Box
+				</div>
+			</div>
+		);
 	}
 }
 

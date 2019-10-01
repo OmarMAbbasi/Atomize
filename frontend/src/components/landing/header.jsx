@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import SchoolIcon from "../../Icons/School.js";
+import { withRouter, NavLink } from "react-router-dom";
 
-export default class Header extends Component {
+class Header extends Component {
 	render() {
 		return (
-			<div className="profile-anchor">
+			<NavLink to={""} className="profile-anchor">
 				<div className="profile-nest">
 					<SchoolIcon />
 				</div>
-			</div>
+			</NavLink>
 		);
 	}
 }
+
+export default withRouter(Header);

@@ -27,6 +27,20 @@
 .tool {
 	height: 10vh;
 	width: 100%;
-	background-color: transparent;
+	border-radius: 20%;
 	margin-top: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.tool-focused {
+	height: 10vh;
+	width: 100%;
+	border-radius: 20%;
+	margin-top: 30px;
+	display: flex;
+	background: navy;
+	align-items: center;
+	justify-content: center;
 }

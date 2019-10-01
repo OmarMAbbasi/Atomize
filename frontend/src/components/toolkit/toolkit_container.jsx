@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Toolkit from "./toolkit";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
 	return {
