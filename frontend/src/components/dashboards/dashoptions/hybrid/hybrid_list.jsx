@@ -33,31 +33,30 @@ class HybridList extends Component {
 
 	componentDidMount() {
 		this.props.getCurrentTeacher({ _id: "5d924a0fbdba9714f9d22f58" });
-		this.state = {
+		this.setState({
 			students: this.props.students || [],
 			filteredStudents: this.props.students || [],
 			courses: this.props.courses || [],
 			filteredCourses: this.props.courses || []
-		};
+		});
 	}
 
 	filterCourses = function(search) {
 		let regex = new RegExp("(" + search + ")", "i");
-		this.setState(
-			this.state.courses.filter(course => {
-				course.match(regex);
+		this.setState({
+			courses: this.props.courses.filter(course => {
+				return course.subject.match(regex);
 			})
-		);
+		});
 	};
 
 	filterStudents = function(search) {
-		console.log("Search!");
 		let regex = new RegExp("(" + search + ")", "i");
-		this.setState(
-			this.state.students.filter(student => {
-				student.match(regex);
+		this.setState({
+			students: this.props.students.filter(student => {
+				return student.name.match(regex);
 			})
-		);
+		});
 	};
 
 	update(e) {
