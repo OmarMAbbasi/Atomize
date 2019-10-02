@@ -81,6 +81,12 @@ class HybridList extends Component {
 	}
 
 	render() {
+		let dispStudents = this.state.students.length
+			? this.state.students
+			: this.props.students;
+		let dispCourses = this.state.courses.length
+			? this.state.courses
+			: this.props.courses;
 		return (
 			<div className="viewport">
 				<div className="hybrid-students-nest">
@@ -92,7 +98,12 @@ class HybridList extends Component {
 						<input id="student-field" className="student-search" />
 						<SubmitIcon className="submit-button" />
 					</form>
-					<ul className="hybrid-students-list"></ul>
+					<ul className="hybrid-students-list">
+						{dispStudents.map(student => {
+							debugger;
+							return <li>{student.name}</li>;
+						})}
+					</ul>
 				</div>
 				<div className="hybrid-courses-nest">
 					<form
@@ -103,7 +114,11 @@ class HybridList extends Component {
 						<input id="course-field" className="courses-search" />
 						<SubmitIcon className="submit-button" />
 					</form>
-					<ul className="hybrid-courses-list"></ul>
+					<ul className="hybrid-courses-list">
+						{dispCourses.map(course => {
+							return <li>{course.subject}</li>;
+						})}
+					</ul>
 				</div>
 			</div>
 		);
