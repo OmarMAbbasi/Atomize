@@ -9,7 +9,7 @@ const sessionReducer = (oldState, action) => {
 	let newState = Object.assign({}, oldState);
 	switch (action.type) {
 		case RECEIVE_CURRENT_TEACHER:
-			Object.assign(newState, action.payload.data.teachers);
+			Object.assign(newState, Object.values(action.payload.data.teachers)[0]);
 			return newState;
 		default:
 			return oldState;

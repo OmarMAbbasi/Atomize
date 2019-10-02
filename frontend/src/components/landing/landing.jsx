@@ -6,9 +6,7 @@ import DashController from "../dashboards/dash_controller";
 class Landing extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			currentTeacher: props.currentTeacher
-		};
+		// props.getCurrentTeacher({ _id: "5d924a0fbdba9714f9d22f58" });
 	}
 
 	componentDidMount() {}

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import HybridList from "./dashoptions/hybrid/hybrid_list";
-import CourseList from "./dashoptions/courses/course_list";
-import StudentList from "./dashoptions/students/student_list";
+import HybridListContainer from "./dashoptions/hybrid/hybrid_list_container";
+import CourseListContainer from "./dashoptions/courses/course_list_container";
+import StudentListContainer from "./dashoptions/students/student_list_container";
 
 class DashController extends Component {
 	constructor(props) {
@@ -13,9 +13,9 @@ class DashController extends Component {
 		console.log("Hit Dash Controller");
 		return (
 			<Switch>
-				<Route exact path="/students" component={StudentList} />
-				<Route exact path="/courses" component={CourseList} />
-				<Route path="/" component={HybridList} />
+				<Route exact path="/students" component={StudentListContainer} />
+				<Route exact path="/courses" component={CourseListContainer} />
+				<Route path="/" component={HybridListContainer} />
 			</Switch>
 		);
 	}

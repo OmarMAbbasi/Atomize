@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import {} from "../../actions/teachers";
+import { getCurrentTeacher } from "../../actions/teachers";
 import Landing from "./landing";
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,7 +11,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => {
-	return {};
+	return {
+		getCurrentTeacher: data => dispatch(getCurrentTeacher(data))
+	};
 };
 
 export default connect(

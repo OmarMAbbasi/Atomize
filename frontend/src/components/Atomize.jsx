@@ -10,6 +10,7 @@ import "../style/css-reset.css";
 import "../style/Atomize.css";
 
 function Atomize() {
+
 	return (
 		<div>
 			<Switch>

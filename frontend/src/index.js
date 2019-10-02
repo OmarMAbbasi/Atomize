@@ -31,10 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	window.editCourse = editCourse;
 	window.deleteCourse = deleteCourse;
 
-	let teacher = {
-		_id: "5d924a0fbdba9714f9d22f58"
-	};
-	window.dispatch(window.getCurrentTeacher(teacher));
+
 
 	// batchTesting()
 
