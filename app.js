@@ -20,6 +20,13 @@ serv.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 const mongoose = require("mongoose");
 const db = require("./config/keys").mongoURI;
 
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static("frontend/build"));
+	app.get("/", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+	});
+}
+
 mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log("Connected to MongoDB successfully"))
