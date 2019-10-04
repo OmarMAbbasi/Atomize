@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 mongoose
-	.connect(db, { useNewUrlParser: true })
+	.connect("mongodb+srv://admin:BWudTBcL7MXBvqXT@cluster0-vdbxb.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true })
 	.then(() => console.log("Connected to MongoDB successfully"))
 	.catch(err => console.log(err));
 
