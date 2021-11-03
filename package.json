@@ -29,7 +29,7 @@
 		"passport": "^0.4.0",
 		"passport-jwt": "^4.0.0",
 		"react-scripts": "^3.1.2",
-		"validator": "^11.1.0"
+		"validator": "^13.7.0"
 	},
 	"devDependencies": {
 		"@svgr/cli": "^4.3.3",
